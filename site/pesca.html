@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Saving Sea - Salve as Águas!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendor/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="css/saving-sea.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body id="page-top">
+
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-anchor" aria-hidden="true"></i> Saving Sea</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="denuncias.html">Denúncias</a>
+                        </li>
+                        <li>
+                            <a href="pesca.html">Pesca</a>
+                        </li>
+                        <li>
+                            <a href="graficos.html">Gráficos</a>
+                        </li>
+                        <li>
+                            <a href="mapa.html">Mapa</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+
+        <section id="consulta" class="features">
+             <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        <h2>Consulte agora mesmo!</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-lg-8">
+                        <div class="accordion-group">
+                            <div class="panel-group pesca" role="tablist" id="accordion" aria-multiselectable="true"></div>
+                        </div> <!-- accordion-group -->
+                    </div>
+
+                    <div class='col-md-4 col-lg-4'>
+
+                        <div class="btn-filtro">
+                            <div class="btn-group btn-group-justified" role="group">
+                            <a type="button" class="btn btn-md btn-proibido" filtro='proibido'>Proibido</a>
+                                <a type="button" class="btn btn-md btn-pendente" filtro='pendente'>Pendente</a>
+                                <a type="button" class="btn btn-md btn-liberado" filtro='liberado'>Liberado</a>
+                            </div>
+                        </div>
+
+                        <div id='buscaPesca'>
+                            <p class="text-muted">Verifique os locais de pesca <i class="fa fa-ship" aria-hidden="true"></i></p>
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="Faça sua busca...">
+                              <span class="input-group-btn">
+                                  <button class="btn btn-success" type="button">Filtrar</button>
+                              </span>
+                          </div>
+                      </div> 
+                  </div> 
+
+
+              </div> <!-- row -->
+          </div> <!-- container -->
+    </section>
+
+      <footer>
+        <div class="container">
+            <p>&copy; 2016 Saving Sea. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/saving-sea.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/data.json"></script>
+
+
+
+
+   <script type="text/javascript">
+
+        setTimeout(function(){
+                    geraPesca();
+            },1000)
+
+
+        var ultimoMapa = 0;
+        var map;
+        function initMap(qual) {
+            setTimeout(function(){
+                    geraMapa(qual);
+            },1000)
+        };
+
+       function geraMapa(qual){
+        dado = pescas[qual];
+        dado.id = qual;
+        if(dado.status == 'pendente'){
+            return;
+        }
+
+        posicao = dado.posicao;
+        polygons = dado.perimetro;
+
+
+        map = new google.maps.Map(document.getElementById('map'+qual), {
+            center: posicao,
+            zoom: 10
+        });
+
+        cor = "";
+        if(dado.status == 'proibido'){
+            cor = '#FF0000';
+        }else if(dado.status == 'liberado'){
+            cor = '#00FF00';
+        }
+          
+
+
+           // Construct the polygon.
+          var proibido = new google.maps.Polygon({
+            paths: polygons,
+            strokeColor: cor,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: cor,
+            fillOpacity: 0.35
+          });
+          proibido.setMap(map);
+        };
+
+            </script>
+            <script async defer
+              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBET-YOvl_px6U2UHE2Hg5tvDCoLWqcOO4">
+            </script>
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#046380</color>
+    <color name="colorPrimaryDark">#002F2F</color>
+    <color name="colorAccent">#E6E2AF</color>
+
+    <!--Text icons-->
+    <color name="text_icon">#000</color>
+
+    <color name="text_secondary">#757575</color>
+
+    <color name="preto_transparente">#1eb9b598</color>
+
+    <color name="vermelho">@android:color/holo_red_light</color>
+</resources>

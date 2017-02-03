@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Saving Sea - Salve as Águas!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendor/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="css/saving-sea.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body id="page-top">
+
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-anchor" aria-hidden="true"></i> Saving Sea</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="page-scroll" href="#quem-somos">Quem Somos</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="/pesca.html">Consulta</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="/denuncias.html">Denúncias</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="header-content">
+                            <div class="header-content-inner">
+                                <h1>Um sistema para centralizar informações de denúncias relacionadas a poluição das águas e pesca predatória! Venha nos ajudar!</h1>
+                                <a href="#quem-somos" class="btn btn-outline btn-xl page-scroll"><i class="fa fa-hand-paper-o" aria-hidden="true"></i> Quero AJUDAR!</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="device-container">
+                            <div class="device-mockup iphone6_plus portrait white">
+                                <div class="device">
+                                    <div class="screen">
+                                        <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                                        <img src="img/demo-screen-1.jpg" class="img-responsive" alt="">
+                                    </div>
+                                    <div class="button">
+                                        <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="quem-somos" class="download bg-primary text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2 class="section-heading">Nos ajude a salvar o mundo!</h2>
+                        <p>Nosso app está disponível para android! Baixe agora mesmo!</p>
+                        <div class="badges">
+                            <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="consulta" class="features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="section-heading">
+                            <h2>Consulte agora mesmo!</h2>
+                            <p class="text-muted">Verifique os locais de pesca <i class="fa fa-ship" aria-hidden="true"></i></p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+                        <div class="accordion-group">
+                            <div class="panel-group" role="tablist" id="accordion" aria-multiselectable="true"> 
+                                <div class="panel panel-default"> 
+                                    <div class="panel-heading" role="tab" id="headingOne"> 
+                                        <h4 class="panel-title"> 
+                                            <a href="#collapseOne" role="button" onclick='initMap(1)' data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseOne" class="collapsed"> 
+                                                <ul class="list-inline">
+                                                    <li class="name">Nome: <span>Costa do Guarujá</span></li>
+                                                    <li class="status">Status: <span class="proibido">Proibido</span></li>
+                                                    <li class="motivo">Motivo: <span>Pesca desenfreada!</span></li>
+                                                </ul>
+                                            </a>
+                                        </h4> 
+                                    </div> 
+                                    <div class="panel-collapse collapse" role="tabpanel" id="collapseOne" aria-labelledby="headingOne" aria-expanded="false"> 
+                                        <div class="panel-body" id="map1" style="width:700px; height:700px;"></div>
+                                    </div> 
+                                </div> 
+                                <div class="panel panel-default"> 
+                                    <div class="panel-heading" role="tab" id="headingTwo"> 
+                                        <h4 class="panel-title"> 
+                                            <a href="#collapseTwo" class="collapsed" onclick='initMap(2)' role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseTwo"> 
+                                               <ul class="list-inline">
+                                                   <li class="name">Nome: <span>Costa do Martelo</span></li>
+                                                   <li class="status">Status: <span class="liberado">Liberado</span></li>
+                                                   <li class="motivo">Motivo: <span>Época de pesca</span></li>
+                                               </ul> 
+                                           </a> 
+                                       </h4> 
+                                   </div> 
+                                   <div class="panel-collapse collapse" role="tabpanel" id="collapseTwo" aria-labelledby="headingTwo" aria-expanded="false" style="height: 0px;"> 
+                                    <div class="panel-body" id="map2" style="width:700px; height:700px;"></div>
+                                </div> 
+                            </div> 
+                            <div class="panel panel-default"> 
+                                <div class="panel-heading" role="tab" id="headingThree"> 
+                                    <h4 class="panel-title"> 
+                                        <a href="#collapseThree" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapseThree"> 
+                                            <ul class="list-inline">
+                                                <li class="name">Nome: <span>Costa do Teste</span></li>
+                                                <li class="status">Status: <span class="pendente">Pendente</span></li>
+                                                <li class="motivo">Motivo: <span>Aguardando...</span></li>
+                                            </ul>
+                                        </a> 
+                                    </h4> 
+                                </div> 
+                                <div class="panel-collapse collapse" role="tabpanel" id="collapseThree" aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;"> 
+                                    <div class="panel-body">
+                                        Ainda sem dados
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    </div> <!-- accordion-group -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    <section class="cta">
+        <div class="cta-content">
+            <div class="container">
+                <h2>Não espere.<br>Denuncie.</h2>
+                <a href="#denuncia" class="btn btn-outline btn-xl page-scroll">Quero ajudar!</a>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+    <section id="denuncia" class="contact bg-primary">
+        <div class="container">
+            <h2>Nós <i class="fa fa-heart"></i> novos amigos!</h2>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2016 Saving Sea. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/saving-sea.min.js"></script>
+
+    <script type="text/javascript">
+
+        
+        var ultimoMapa = 0;
+        var map;
+        function initMap(qual) {
+            setTimeout(function(){
+                geraMapa(qual);
+            },1000)
+        };
+
+        function geraMapa(qual){
+            posicao = [{lat: -23.973968, lng: -46.162690},{lat: -23.039941, lng:-44.383647}],
+            polygons = [
+            [
+            {lat: -23.864752, lng:-45.781411},
+            {lat: -24.103967, lng:-45.696992},
+            {lat: -23.968764, lng:-46.157014},
+            ],
+            [
+            {lat: -23.039941, lng:-44.383647},
+            {lat: -23.135339, lng:-44.320772},
+            {lat: -23.059477, lng:-44.276678},
+            ]
+            ];
+
+
+            map = new google.maps.Map(document.getElementById('map'+qual), {
+                center: posicao[qual - 1],
+                zoom: 10
+            });
+
+            cor = "";
+            if(qual == 1){
+                cor = '#FF0000';
+            }else if(qual == 2){
+                cor = '#00FF00';
+            }
+            
+
+
+           // Construct the polygon.
+           var proibido = new google.maps.Polygon({
+            paths: polygons[qual - 1],
+            strokeColor: cor,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: cor,
+            fillOpacity: 0.35
+        });
+           proibido.setMap(map);
+       };
+
+   </script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBET-YOvl_px6U2UHE2Hg5tvDCoLWqcOO4">
+   </script>
+
+</body>
+
+</html>

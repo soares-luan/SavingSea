@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Saving Sea - Salve as Águas!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendor/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="css/saving-sea.min.css" rel="stylesheet">
+    <style type="text/css">
+    .chart-container {
+      box-sizing:border-box;
+      margin:2%;
+      width:40%;
+      float:left;
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body id="page-top">
+
+          <nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-anchor" aria-hidden="true"></i> Saving Sea</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="denuncias.html">Denúncias</a>
+                        </li>
+                        <li>
+                            <a href="pesca.html">Pesca</a>
+                        </li>
+                        <li>
+                            <a href="graficos.html">Gráficos</a>
+                        </li>
+                        <li>
+                            <a href="mapa.html">Mapa</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+
+        <section id="consulta" class="features">
+            <div class="container">
+                    <div class='chart-container' style='display:none'>
+                      Pesca
+                      <canvas id="pesca"></canvas>
+                      
+                    </div>
+
+                    <div class='chart-container' style='display:none'>
+                       Poluição
+                      <canvas id="poluicao"></canvas>
+                     
+                    </div>
+
+                    <div class='chart-container' style='display:none'>
+                       Total de denúncias por dia
+                      <canvas id="pizza"></canvas>
+                     
+                    </div>
+
+                     <div class='chart-container' style='display:none'>
+                      Tipos de denúncia por dia
+                      <canvas id="barra"></canvas>
+                     
+                    </div>
+
+                    <div class='chart-container' style='display:none'>
+                      Agrupamento de denúncias por dia
+                      <canvas id="barraSomado"></canvas>
+                     
+                    </div>
+
+            </div> <!-- container -->
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2016 Saving Sea. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/saving-sea.min.js"></script>
+    <script type="text/javascript" src="js/Chart.bundle.js"></script>
+    <script type="text/javascript" src="js/Chart.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/data.json"></script>
+
+    <script>
+        function graficoGeral(){
+          var tipos = {};
+          for(key in denuncias){
+            if(tipos[denuncias[key].tipo] == undefined)
+              tipos[denuncias[key].tipo] = [];
+
+            tipos[denuncias[key].tipo].push(denuncias[key]);
+          }
+
+
+
+          var somas = {};
+          for(key in tipos){
+            tipos[key].forEach(function(denuncia){
+              if(somas[key] == undefined)
+                somas[key] = {};
+              
+              if(somas[key][denuncia.data] == undefined)
+                somas[key][denuncia.data] = 0;      
+
+              somas[key][denuncia.data]++;
+              });
+          }
+
+
+          for(key in somas){
+              var labels = [];
+              var dados = [];
+
+              for(date in somas[key]){
+                var novaData = new Date(parseInt(date));
+                labels.push(novaData.getDate());
+                dados.push(somas[key][date]);
+              }
+
+
+               var data = {
+                    datasets: [{
+                        data: dados,
+                        backgroundColor: [
+                            "#FF6384",
+                            "#4BC0C0",
+                            "#FFCE56",
+                        ],
+                    }],
+                    labels: labels
+                };
+
+                  $("#"+key).parent().show();
+                 new Chart(document.getElementById(key), {
+                      data: data,
+                      type: 'polarArea',
+                      label: 'Teste',
+                      options: {
+                        elements: {
+                              arc: {
+                                  borderColor: "#000000"
+                              }
+                          },
+                          legend: {
+                            display: true,
+                        }
+                      }
+                  });
+          }
+
+
+        };
+
+        function geraPizza(){
+
+          var selecionados = JSON.parse(localStorage.selecionados);
+
+          var somas = {};
+          for(key in selecionados){
+              if(somas[denuncias[key].data] == undefined)
+                somas[denuncias[key].data] = 0;      
+              
+              somas[denuncias[key].data]++;
+          }
+          
+          var labels = [];
+          var dados = [];
+          for(date in somas){
+            var novaData = new Date(parseInt(date));
+            labels.push(novaData.getDate());
+            dados.push(somas[date]);
+          }
+
+               var data = {
+                    datasets: [{
+                        data: dados,
+                        backgroundColor: [
+                            "#FF6384",
+                            "#4BC0C0",
+                            "#FFCE56",
+                            "#77CE56",
+                        ],
+                    }],
+                    labels: labels
+                };
+
+                  $("#pizza").parent().show();
+                 new Chart(document.getElementById("pizza"), {
+                      data: data,
+                      type: 'doughnut',
+                      options: {
+                          legend: {
+                            display: true,
+                        }
+                      }
+                  });
+
+        };
+
+        function geraBarra(){
+          var selecionados = JSON.parse(localStorage.selecionados);
+
+          var tipos = {};
+          for(key in selecionados){
+            if(tipos[denuncias[key].tipo] == undefined)
+              tipos[denuncias[key].tipo] = [];
+
+            tipos[denuncias[key].tipo].push(denuncias[key]);
+          }
+
+          var datas = {};
+          var somas = {};
+          for(key in tipos){
+            tipos[key].forEach(function(denuncia){
+              if(somas[key] == undefined)
+                somas[key] = {};
+              
+              if(somas[key][denuncia.data] == undefined)
+                somas[key][denuncia.data] = 0;      
+              datas[denuncia.data] = {};
+              somas[key][denuncia.data]++;
+              });
+          }
+
+          var labels = [];
+          var dataset = [];
+          var cores = {poluicao:"#8cbf50",pesca:"#497b92"};
+          for(key in somas){
+            var data = [];
+
+            //só insiro o 0 onde não tem para evitar erros depois
+            for(dt in datas){
+                if(somas[key][dt] == undefined){
+                  somas[key][dt] = 0;
+                }
+                var date = new Date(parseInt(dt));
+                if(labels.indexOf(date.getDate()) == -1)
+                labels.push(date.getDate());
+
+                data.push(somas[key][dt]);
+            }
+            
+
+            dataset.push({
+                            label: key,
+                            backgroundColor: [
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                            ],
+                            borderColor: [
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+
+                            ],
+                            borderWidth: 1,
+                            data: data,
+                        });
+          }
+              
+          var data = {labels: labels,datasets: dataset};
+
+          $("#barra").parent().show();
+
+          var myBarChart = new Chart(document.getElementById("barra"), {
+                  type: 'bar',
+                  data: data
+              });
+
+          }
+
+
+
+        function geraBarraGeral(){
+          var selecionados = denuncias;
+
+          var tipos = {};
+          for(key in selecionados){
+            if(tipos[denuncias[key].tipo] == undefined)
+              tipos[denuncias[key].tipo] = [];
+
+            tipos[denuncias[key].tipo].push(denuncias[key]);
+          }
+
+          var datas = {};
+          var somas = {};
+          for(key in tipos){
+            tipos[key].forEach(function(denuncia){
+              if(somas[key] == undefined)
+                somas[key] = {};
+              
+              if(somas[key][denuncia.data] == undefined)
+                somas[key][denuncia.data] = 0;      
+              datas[denuncia.data] = {};
+              somas[key][denuncia.data]++;
+              });
+          }
+
+          var labels = [];
+          var dataset = [];
+          var cores = {poluicao:"#8cbf50",pesca:"#497b92"};
+          for(key in somas){
+            var data = [];
+
+            //só insiro o 0 onde não tem para evitar erros depois
+            for(dt in datas){
+                if(somas[key][dt] == undefined){
+                  somas[key][dt] = 0;
+                }
+                var date = new Date(parseInt(dt));
+                if(labels.indexOf(date.getDate()) == -1)
+                labels.push(date.getDate());
+
+                data.push(somas[key][dt]);
+            }
+            
+
+            dataset.push({
+                            label: key,
+                            backgroundColor: [
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                            ],
+                            borderColor: [
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+                                cores[key],
+
+                            ],
+                            borderWidth: 1,
+                            data: data,
+                        });
+          }
+              
+          var data = {labels: labels,datasets: dataset};
+
+          $("#barra").parent().show();
+
+          var myBarChart = new Chart(document.getElementById("barra"), {
+                  type: 'bar',
+                  data: data
+              });
+
+          }
+
+          function barraGeralSomado(){
+
+          var selecionados = denuncias;
+
+          var somas = {};
+          for(key in selecionados){
+              if(somas[denuncias[key].data] == undefined)
+                somas[denuncias[key].data] = 0;      
+              
+              somas[denuncias[key].data]++;
+          }
+          var cores = [
+                                "#FF6384",
+                                "#4BC0C0",
+                                "#FFCE56",
+                                "#77CE56",
+                            ];
+          var dataset = [];
+          var i = 0;
+          for(date in somas){
+            var novaData = new Date(parseInt(date));
+            dataset.push({
+              label:novaData.getDate(),
+              backgroundColor: 
+                            [
+                               cores[i]
+                            ],
+                            borderColor: [
+                               cores[i]
+
+                            ],
+                            borderWidth: 1,
+                            data: [somas[date]],
+            })
+            i++;
+
+          }
+           
+               var data = {
+                    datasets: dataset
+                };
+
+                  $("#barraSomado").parent().show();
+                 new Chart(document.getElementById("barraSomado"), {
+                      data: data,
+                      type: 'bar',
+                      options: {
+                          legend: {
+                            display: true,
+                        }
+                      }
+                  });
+
+        };
+
+
+
+        function graficosSelecao(){
+          geraPizza();
+          geraBarra();
+          delete localStorage.selecionados;
+        }
+
+     </script>
+
+
+  <script>
+
+      if(localStorage.selecionados == undefined)
+      {
+        graficoGeral();
+        geraBarraGeral();
+        barraGeralSomado();
+      }else{
+        graficosSelecao();
+      }
+
+  </script>
+
+
+
+
+</body>
+
+</html>

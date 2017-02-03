@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp">
+
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/menu_bottom" />
+    <LinearLayout
+        android:id="@+id/menu_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp">
+
+        <ImageButton
+            android:id="@+id/nav_perfil"
+            android:onClick="abreFragment"
+            android:layout_margin="2dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_person_black_24dp"
+            android:background="@drawable/botao_redondo" />
+
+        <ImageButton
+            android:id="@+id/nav_mapa"
+            android:onClick="abreFragment"
+            android:layout_margin="2dp"
+            android:background="@drawable/botao_redondo"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_place_black_24dp"/>
+
+
+        <ImageButton
+            android:id="@+id/nav_sobre"
+            android:onClick="abreFragment"
+            android:layout_margin="2dp"
+            android:background="@drawable/botao_redondo"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_info_black_24dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

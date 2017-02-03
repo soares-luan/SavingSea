@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Saving Sea - Salve as Águas!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendor/device-mockups/device-mockups.min.css">
+
+    <!-- Theme CSS -->
+    <link href="css/saving-sea.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body id="page-top">
+
+     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top affix">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-anchor" aria-hidden="true"></i> Saving Sea</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="denuncias.html">Denuncias</a>
+                    </li>
+                    <li>
+                        <a href="pesca.html">Pesca</a>
+                    </li>
+                    <li>
+                        <a href="graficos.html">Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="mapa.html">Mapa</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+   <section id="consulta" class="features">
+        <div class="container">
+            
+            <div class="row">
+                    <div class="col-md-12 titulo">
+                        <h2>Veja no mapa</h2>
+                    </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-xs-12 col-md-8 col-lg-8">
+                        <div class="accordion-group">
+                         <div class='col-md-8' id='map' style='width:700px;height:500px;' /> </div>
+                     </div> <!-- accordion-group -->
+             </div> 
+
+              
+                 <!-- busca -->
+                 <div class='col-md-4 col-lg-4'>
+
+                    <div class="btn-filtro">
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a type="button" class="btn btn-md btn-info" filtro='pesca'>Pesca</a>
+                            <a type="button" class="btn btn-md btn-info" filtro='poluicao'>Poluição</a>
+                        </div>
+                    </div>
+
+                    <div id='filtro'>
+                        <input id='data1'><input id='data2'>
+                        <div class="input-group">
+                          <input type="text" class="form-control" id='busca' placeholder="Faça sua busca...">
+                          <span class="input-group-btn">
+                              <button class="btn btn-success" id='buscar' type="button">Filtrar</button>
+                          </span>
+                      </div>
+                      <div class="selecionados"> 
+                        Selecionados 
+                        <ul id='tipos'>
+                            <li id='pesca'>Pesca: <i>0</i></li>
+                            <li id='poluicao'>Poluição: <i>0</i></li>
+                        </ul>
+                        <ul id='selecionados' class="list-unstyled"></ul>
+                        <a class="btn btn-block btn-default" id='geraGrafico' href='javascript:;'>Gerar gráfico</a>
+                        <a class="btn btn-block btn-default" id='limpar' href='javascript:;'>Limpar</a>
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2016 Saving Sea. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Máscara -->
+    <script src="js/mascara.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/saving-sea.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/data.json"></script>
+
+
+
+
+    <script type="text/javascript">
+
+        var map;
+        
+        $('#data1').mask('00/00/0000');
+        $('#data2').mask('00/00/0000');
+
+        function initMap() {
+            setTimeout(function(){
+                geraMapa();
+            },1000)
+        };
+        var z = 10;
+        var posicao = {lat:-23.995532, lng:-46.235216};
+
+
+        $("#limpar").on('click',function(){
+            limpar()
+            geraMapa();
+        });
+
+
+    $("#buscar").on('click',function(){
+        texto = $(this).parent().parent().find('input#busca').val();
+        var d1 = $('input#data1').val();
+        var d2 = $('input#data2').val();
+        if(d1 != '' && d2 != ''){
+            d1 = d1.split('/');
+            d1 = d1[1]+'-'+d1[0]+'-'+d1[2];
+            d1 = new Date(d1);
+            d2 = d2.split('/');
+            d2 = d2[1]+'-'+d2[0]+'-'+d2[2];
+            d2 = new Date(d2+" 23:59");
+            if(d1 < d2){
+                data1 = d1;
+                data2 = d2;
+            }else{
+                data1 = '';
+                data2 = '';
+            }
+        }else{
+            data1 = '';
+            data2 = '';
+        }
+
+        geraMapa();
+    })
+
+    function geraMapa(){
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: posicao,
+            zoom: z
+        });
+
+        google.maps.event.addListener(map, 'zoom_changed', function() {
+            z = map.getZoom();
+        });
+        google.maps.event.addListener(map, 'dragend', function() {
+            posicao = {lat:map.getCenter().lat(),lng:map.getCenter().lng()};
+        });
+
+         var icones = {"poluicao":{
+                                    url: "./img/ic_delete.png", // url
+                                    scaledSize: new google.maps.Size(35, 35), // scaled size
+                                    origin: new google.maps.Point(0,0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                                },
+                    "poluicao_ativo":{
+                                    url: "./img/ic_delete_active.png", // url
+                                    scaledSize: new google.maps.Size(35, 35), // scaled size
+                                    origin: new google.maps.Point(0,0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                                },
+                    "pesca":{
+                                    url: "./img/ic_fish.png", // url
+                                    scaledSize: new google.maps.Size(35, 35), // scaled size
+                                    origin: new google.maps.Point(0,0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                            },
+                    "pesca_ativo":{
+                                    url: "./img/ic_fish_active.png", // url
+                                    scaledSize: new google.maps.Size(35, 35), // scaled size
+                                    origin: new google.maps.Point(0,0), // origin
+                                    anchor: new google.maps.Point(0, 0) // anchor
+                                }
+                            };
+
+        // Ferramentas de desenho
+        var drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: null,
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [
+                google.maps.drawing.OverlayType.POLYGON
+              ]
+            },
+            circleOptions: {
+              fillColor: '#ffff00',
+              fillOpacity: 1,
+              strokeWeight: 5,
+              clickable: false,
+              editable: true,
+              zIndex: 1
+            }
+        });
+
+        drawingManager.setMap(map);
+
+        google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+            var id = makeid();
+            poligonos[id] = polygon;
+            verificaPoligono(id);
+        });
+
+        for(key in poligonos){
+            poligonos[key].setMap(map);
+        }
+
+        //gero os marcadores;
+        for(id in denuncias){
+            denuncia = denuncias[id];
+            denuncia.id = id;
+
+            if(selecionados[denuncia.id] == undefined){
+                if(data1 != '' && data2 != ''){
+                    if(denuncia.data < data1.getTime() || denuncia.data > data2.getTime()){
+                        continue;
+                    }
+                }
+                if(filtro != ''){
+                    if(filtro != denuncia.tipo){
+                        continue;
+                    } 
+                }
+
+                if(texto != ""){
+                    if(denuncia.descricao.indexOf(texto) == -1){
+                        continue;
+                    }
+                }
+            }
+            
+
+            
+            var marker = new google.maps.Marker({
+                position: denuncia.posicao,
+                map: map,
+                icon:icones[(selecionados[denuncia.id] != undefined ? denuncia.tipo+"_ativo" : denuncia.tipo) ],
+                title: denuncia.descricao
+            });
+            imagens = "";
+            denuncia.imagens.forEach(function(imagem){
+                imagens += "<img src='imagens/"+imagem+"' style='width: 200px;'>";
+            });
+            marker.infowindow = new google.maps.InfoWindow({
+              content: denuncia.descricao+"<br/ > <a href='javascript:;' onclick=\"adicionaLista('"+denuncia.id+"','"+denuncia.descricao+"','"+denuncia.tipo+"')\">Adicionar a lista</a> <br />"+imagens
+          });
+            google.maps.event.addListener(marker, 'click', function() {
+              this.infowindow.open(map, this);
+            });
+
+        };
+
+    }
+
+    function verificaPoligono(id){
+         setTimeout(function(){
+            var vazio = true;
+
+            //se passo sem ID, eu verifico todos.
+            if(id == undefined){
+                for(key in poligonos){
+                    poligono = poligonos[key];
+                    var vazio = true;
+                      for(chave in selecionados){
+                        var existe =  google.maps.geometry.poly.containsLocation(new google.maps.LatLng(denuncias[chave].posicao.lat, denuncias[chave].posicao.lng), poligono) ? true : false ;
+                         if(existe){
+                            vazio = false;
+                        }
+                      }
+                    if(vazio){
+                        poligonos[key].setMap(null);
+                        delete poligonos[key];
+                    }
+                }
+
+                
+            }else{
+                poligono = poligonos[id];
+                var vazio = true;
+                for(id in denuncias){
+                    denuncia = denuncias[id];
+                    denuncia.id = id;
+                    var existe =  google.maps.geometry.poly.containsLocation(new google.maps.LatLng(denuncia.posicao.lat, denuncia.posicao.lng), poligono) ? true : false ;
+                         if(existe){
+                            vazio = false;
+
+                             if(data1 != '' && data2 != ''){
+                                if(denuncia.data < data1.getTime() || denuncia.data > data2.getTime()){
+                                    continue;
+                                }
+                            }
+                            if(filtro != ''){
+                                if(filtro != denuncia.tipo){
+                                    continue;
+                                } 
+                            }
+                            
+                            if(texto != ""){
+                                if(denuncia.descricao.indexOf(texto) == -1){
+                                    continue;
+                                }
+                            }
+
+                            adicionaLista(denuncia.id,denuncia.descricao,denuncia.tipo)
+                        }
+                };
+
+                if(vazio){
+                    poligonos[id].setMap(null);
+                    delete poligonos[id];
+                }
+            }
+
+            geraMapa();
+        },0)
+    }
+
+    function adicionaLista(id,descricao,tipo){
+        //se já adicionei o marcador.
+        if(selecionados[id] != undefined){
+            return false;
+        }
+        if(tipo == 'poluicao'){
+            poluicao ++;
+            $("#tipos li#poluicao i").html(poluicao);
+        }else{
+            pesca ++;
+            $("#tipos li#pesca i").html(pesca);
+        }
+
+        var data = new Date(denuncias[id].data);
+        data = (data.getDate().toString().length == 1 ? "0" : "")+data.getDate()+"/"+(data.getMonth().toString().length == 1 ? "0" : "")+(data.getMonth()+1)+"/"+data.getFullYear();
+        
+        $("#selecionados").append("<li id="+id+"><a href='javascript:;'><i class='fa fa-trash'></i></a>"+id+" - "+descricao+" Data:"+data+"</li>");
+        selecionados[id] = true;
+
+        $("#selecionados li#"+id+" a").on('click',function(){
+            var id = $(this).parent().attr('id');
+            $("#selecionados li[id="+id+"]").remove();
+            delete selecionados[id];
+            verificaPoligono();
+        });
+        geraMapa();
+    }
+
+
+
+    $(".btn-filtro a[type=button]").on('click',function(){
+        if($(this).attr('filtro') == 'pesca'){
+            $(".btn-filtro a[type=button][filtro=pesca]").addClass('active');
+            $(".btn-filtro a[type=button][filtro=poluicao]").removeClass('active');
+        }else{
+            $(".btn-filtro a[type=button][filtro=poluicao]").addClass('active');
+            $(".btn-filtro a[type=button][filtro=pesca]").removeClass('active');
+        }
+
+        if(filtro == $(this).attr('filtro')){
+            filtro = "";
+            $(this).removeClass('active');
+        }else{
+            filtro = $(this).attr('filtro');
+        }
+        
+        geraMapa();
+
+    });
+
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBET-YOvl_px6U2UHE2Hg5tvDCoLWqcOO4&libraries=drawing&callback=initMap">
+</script>
+
+</body>
+
+</html>
